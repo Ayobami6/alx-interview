@@ -20,7 +20,7 @@ try:
             continue
 
         # destructure the tokenized line
-        ip_address, _, _, date, _, _, request, status_code, file_size = line_token
+        ip_address, _, _, _, _, _, request, status_code, file_size = line_token
 
         try:
             status_code = int(status_code)
@@ -38,14 +38,6 @@ try:
             print(f"File size: {total_file_size}")
             for code in sorted(status_code_count_map.keys()):
                 print(f"{code}: {status_code_count_map[code]}")
-
-        # print(ip_address)
-        # print(date)
-        # print(time)
-        # print(request)
-        # print(status_code)
-        # print(file_size)
-
 
 except KeyboardInterrupt:
     print(f"File size: {total_file_size}")
