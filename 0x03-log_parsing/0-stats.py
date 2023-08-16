@@ -4,8 +4,8 @@
 from sys import stdin
 
 # init vaariables
-total_file_size: int = 0
-status_code_count_map: dict = {}
+total_file_size = 0
+status_code_count_map = {}
 
 try:
     # loop through the lines from the keyboard input
@@ -39,7 +39,8 @@ try:
             for code in sorted(status_code_count_map.keys()):
                 print(f"{code}: {status_code_count_map[code]}")
 
-except KeyboardInterrupt:
+except KeyboardInterrupt as err:
     print(f"File size: {total_file_size}")
     for code in sorted(status_code_count_map.keys()):
         print(f"{code}: {status_code_count_map[code]}")
+    print(err)
