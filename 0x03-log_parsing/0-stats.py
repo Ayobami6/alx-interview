@@ -4,13 +4,13 @@
 from sys import stdin
 
 # init vaariables
-total_file_size = 0
-status_code_count_map = {}
+total_file_size: int = 0
+status_code_count_map: dict = {}
 
 try:
     # loop through the lines from the keyboard input
     for line_no, line in enumerate(stdin, start=1):
-        line = line.strip()
+        # line = line.strip()
 
         # tokenize the line read
         line_token: list = line.split()
