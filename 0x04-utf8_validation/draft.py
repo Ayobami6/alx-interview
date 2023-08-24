@@ -3,7 +3,7 @@
 
 def validUTF8(data) -> bool:
     def check_for_8_bits_char(item) -> bool:
-        if item <= 127:
+        if -127 <= item <= 127:
             return True
         else:
             return False
