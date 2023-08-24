@@ -3,33 +3,35 @@
 
 def validUTF8(data) -> bool:
     def check_for_8_bits_char(item) -> bool:
-        if item < 128:  # 1 bytes character
+        if item < 128:  # 1 byte character
             return True
-        elif item < 192:  # invalid
-            return False
-        elif 191 < item < 224:  # 2 bytes cahr
-            bin_rep = bin(item)[2:]
-            if bin_rep[3] == '1' and bin_rep[4] == '0':
-                return True
-            else:
-                return False
-        elif 223 < item < 240:  # 3 bytes
-            bin_rep = bin(item)[2:]
-            if bin_rep[4] == '1' and bin_rep[5] == '0':
-                return True
-            else:
-                return False
-        elif 239 < item < 248:
-            bin_rep = bin(item)[2:]
-            if bin_rep[5] == '1' and bin_rep[6] == '0':
-                return True
-            else:
-                return False
+        elif 192 <= item < 224:  # 2 bytes character
+            # check for the continuation byte rules
+            return 128 <= data[i + 1] < 192 if i + 1 < len(data) else False
+        elif 224 <= item < 240:  # 3 bytes character
+            return (
+                128 <= data[i + 1] < 192
+                and 128 <= data[i + 2] < 192
+                if i + 2 < len(data)
+                else False
+            )
+        elif 240 <= item < 248:  # 4 bytes character
+            return (
+                128 <= data[i + 1] < 192
+                and 128 <= data[i + 2] < 192
+                and 128 <= data[i + 3] < 192
+                if i + 3 < len(data)
+                else False
+            )
         return False
 
-    results = list(map(lambda x: check_for_8_bits_char(x), data))
+    i = 0
+    while i < len(data):
+        if not check_for_8_bits_char(data[i]):
+            return False
+        i += 1
 
-    return all(results)
+    return True
 
 
 # def check_for_8_bits_char(item: int) -> bool:
@@ -46,6 +48,42 @@ def validUTF8(data) -> bool:
 #     else:
 #         return False
 
+# def check_for_8_bits_char(item: int) -> bool:
+#         """ check for valid 8 bit char
+
+#         Args:
+#             item (int): int char
+
+#         Returns:
+#             bool: true if less than 127 otherwise fasle
+#         """
+#         if item < 128:  # 1 bytes character
+#             return True
+#         elif item < 192:  # invalid
+#             return False
+#         elif 191 < item < 224:  # 2 bytes cahr
+#             bin_rep = bin(item)[2:]  # convert to binary
+#             if bin_rep[3] == '1' and bin_rep[4] == '0':
+#                 return True
+#             else:
+#                 return False
+#         elif 223 < item < 240:  # 3 bytes
+#             bin_rep = bin(item)[2:]
+#             if bin_rep[4] == '1' and bin_rep[5] == '0':
+#                 return True
+#             else:
+#                 return False
+#         elif 239 < item < 248:
+#             bin_rep = bin(item)[2:]
+#             if bin_rep[5] == '1' and bin_rep[6] == '0':
+#                 return True
+#             else:
+#                 return False
+#         return False
+
+#     results = list(map(lambda x: check_for_8_bits_char(x), data))
+
+#     return all(results)
 
 data = [65]
 print(validUTF8(data))
