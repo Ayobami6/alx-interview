@@ -22,7 +22,7 @@ def validUTF8(data: List[int]) -> bool:
         Returns:
             bool: true if less than 127 otherwise fasle
         """
-        if item <= 127:
+        if item < 256:
             return True
         else:
             return False
