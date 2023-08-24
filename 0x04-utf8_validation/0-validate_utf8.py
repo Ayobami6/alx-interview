@@ -22,10 +22,29 @@ def validUTF8(data: List[int]) -> bool:
         Returns:
             bool: true if less than 127 otherwise fasle
         """
-        if -127 <= item <= 127:
+        if item < 128:  # 1 bytes character
             return True
-        else:
+        elif item < 192:  # invalid
             return False
+        elif 191 < item < 224:  # 2 bytes cahr
+            bin_rep = bin(item)[2:]  # convert to binary
+            if bin_rep[3] == '1' and bin_rep[4] == '0':
+                return True
+            else:
+                return False
+        elif 223 < item < 240:  # 3 bytes
+            bin_rep = bin(item)[2:]
+            if bin_rep[4] == '1' and bin_rep[5] == '0':
+                return True
+            else:
+                return False
+        else:
+            bin_rep = bin(item)[2:]
+            if bin_rep[5] == '1' and bin_rep[6] == '0':
+                return True
+            else:
+                return False
+        return False
 
     results = list(map(lambda x: check_for_8_bits_char(x), data))
 
