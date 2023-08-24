@@ -38,7 +38,7 @@ def validUTF8(data: List[int]) -> bool:
                 return True
             else:
                 return False
-        else:
+        elif 239 < item < 248:
             bin_rep = bin(item)[2:]
             if bin_rep[5] == '1' and bin_rep[6] == '0':
                 return True
