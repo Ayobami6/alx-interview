@@ -1,36 +1,33 @@
 #!/usr/bin/env python3
 
-
 def validUTF8(data) -> bool:
-    def check_for_8_bits_char(item) -> bool:
-        if item < 128:  # 1 byte character
-            return True
-        elif 192 <= item < 224:  # 2 bytes character
-            # check for the continuation byte rules
-            return 128 <= data[i + 1] < 192 if i + 1 < len(data) else False
-        elif 224 <= item < 240:  # 3 bytes character
-            return (
-                128 <= data[i + 1] < 192
-                and 128 <= data[i + 2] < 192
-                if i + 2 < len(data)
-                else False
-            )
-        elif 240 <= item < 248:  # 4 bytes character
-            return (
-                128 <= data[i + 1] < 192
-                and 128 <= data[i + 2] < 192
-                and 128 <= data[i + 3] < 192
-                if i + 3 < len(data)
-                else False
-            )
-        return False
-
     i = 0
     while i < len(data):
-        if not check_for_8_bits_char(data[i]):
+        if data[i] < 128:  # Single-byte character
+            i += 1
+        elif 192 <= data[i] < 224:  # Two-byte character
+            if i + 1 >= len(data) or not (128 <= data[i + 1] < 192):
+                return False
+            i += 2
+        elif 224 <= data[i] < 240:  # Three-byte character
+            if (
+                i + 2 >= len(data)
+                or not (128 <= data[i + 1] < 192)
+                or not (128 <= data[i + 2] < 192)
+            ):
+                return False
+            i += 3
+        elif 240 <= data[i] < 248:  # Four-byte character
+            if (
+                i + 3 >= len(data)
+                or not (128 <= data[i + 1] < 192)
+                or not (128 <= data[i + 2] < 192)
+                or not (128 <= data[i + 3] < 192)
+            ):
+                return False
+            i += 4
+        else:
             return False
-        i += 1
-
     return True
 
 
@@ -84,6 +81,36 @@ def validUTF8(data) -> bool:
 #     results = list(map(lambda x: check_for_8_bits_char(x), data))
 
 #     return all(results)
+
+if item < 128:  # 1 byte character
+            return True
+        elif 192 <= item < 224:  # 2 bytes character
+            # check for the continuation byte rules
+            return 128 <= data[i + 1] < 192 if i + 1 < len(data) else False
+        elif 224 <= item < 240:  # 3 bytes character
+            return (
+                128 <= data[i + 1] < 192
+                and 128 <= data[i + 2] < 192
+                if i + 2 < len(data)
+                else False
+            )
+        elif 240 <= item < 248:  # 4 bytes character
+            return (
+                128 <= data[i + 1] < 192
+                and 128 <= data[i + 2] < 192
+                and 128 <= data[i + 3] < 192
+                if i + 3 < len(data)
+                else False
+            )
+        return False
+
+    i = 0
+    while i < len(data):
+        if not check_for_8_bits_char(data[i]):
+            return False
+        i += 1
+
+    return True
 
 data = [65]
 print(validUTF8(data))
