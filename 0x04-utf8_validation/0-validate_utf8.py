@@ -15,13 +15,17 @@ def validUTF8(data: List[int]) -> bool:
     """
     i = 0
     while i < len(data):
-        if data[i] < 128:  # Single-byte character
+        # Single-byte character for ascii chars
+        if data[i] < 128:
             i += 1
-        elif 192 <= data[i] < 224:  # Two-byte character
+            # Two-byte character
+        elif 192 <= data[i] < 224:
+            # continuation byte logic for 2-bytes caharacter
             if i + 1 >= len(data) or not (128 <= data[i + 1] < 192):
                 return False
             i += 2
-        elif 224 <= data[i] < 240:  # Three-byte character
+        # Three-byte character
+        elif 224 <= data[i] < 240:
             if (
                 i + 2 >= len(data)
                 or not (128 <= data[i + 1] < 192)
@@ -29,7 +33,8 @@ def validUTF8(data: List[int]) -> bool:
             ):
                 return False
             i += 3
-        elif 240 <= data[i] < 248:  # Four-byte character
+        # Four-byte character
+        elif 240 <= data[i] < 248:
             if (
                 i + 3 >= len(data)
                 or not (128 <= data[i + 1] < 192)
