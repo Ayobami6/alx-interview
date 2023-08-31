@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 """ N queens Module """
-from typing import List
 import sys
 
 
@@ -20,7 +19,7 @@ class Chess:
         # set up board
         self.board = [[0] * self.N for _ in range(self.N)]
 
-    def is_safe(self, board: List[list], row: int, col: int, N) -> bool:
+    def is_safe(self, board, row: int, col: int, N) -> bool:
         """ Check if queen is safe for placement
 
         Args:
@@ -50,8 +49,8 @@ class Chess:
         return True
 
     def find_solution(
-            self, board: List[list],
-            col: int, N: int, solutions: List[list]) -> bool:
+            self, board,
+            col: int, N: int, solutions) -> bool:
         """ find solution for nqueens problem
 
         Args:
