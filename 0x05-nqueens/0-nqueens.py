@@ -95,6 +95,8 @@ class Chess:
 
 
 def main() -> None:
+    """ main function
+    """
     if len(sys.argv) != 2:
         print("Usage: nqueens N")
         sys.exit(1)
