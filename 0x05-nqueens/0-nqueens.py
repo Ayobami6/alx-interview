@@ -86,7 +86,9 @@ class Chess:
 
         return res
 
-    def solve_nqueens(self):
+    def solve_nqueens(self) -> None:
+        """ N queens method
+        """
         # if no valid solution is found return empty list
         if not self.find_solution(self.board, 0, self.N, Chess.SOLUTIONS):
             return []
