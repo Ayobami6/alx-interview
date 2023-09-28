@@ -2,15 +2,13 @@
 """island perimeter
 """
 
-from typing import List
 
-
-def island_perimeter(grid: List[list]) -> int:
+def island_perimeter(grid: list) -> int:
     """ Island Perimetr
-    
+
     Args:
         grid (List[list]): island grid
-    
+
     Returns:
         int: island perimeter
     """
