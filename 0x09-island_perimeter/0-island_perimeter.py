@@ -6,6 +6,14 @@ from typing import List
 
 
 def island_perimeter(grid: List[list]) -> int:
+    """ Island Perimetr
+    
+    Args:
+        grid (List[list]): island grid
+    
+    Returns:
+        int: island perimeter
+    """
     # initialize the perimeter
     perimeter: int = 0
     # loop through the grid
